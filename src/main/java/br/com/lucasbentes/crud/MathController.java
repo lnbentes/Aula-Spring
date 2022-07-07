@@ -69,8 +69,8 @@ public class MathController {
 		return convertToDouble(numberOne) / convertToDouble(numberTwo);
 	}
 
-	@RequestMapping(value = "/medi/{numberOne}/{numberTwo}", method=RequestMethod.GET)
-	public Double medi(
+	@RequestMapping(value = "/mean/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+	public Double mean(
 			@PathVariable(value = "numberOne") String numberOne,
 			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception{
@@ -80,6 +80,18 @@ public class MathController {
 		}
 
 		return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+	}
+
+	@RequestMapping(value = "/sqrt/{number}", method=RequestMethod.GET)
+	public Double sqrt(
+			@PathVariable(value = "numberOne") String number
+	) throws Exception{
+
+		if(!isNumeric(number)) {
+			throw new UnsupportedMathOperationException("Please ste a numeric value!");
+		}
+
+		return Math.sqrt(convertToDouble(number));
 	}
 
 
