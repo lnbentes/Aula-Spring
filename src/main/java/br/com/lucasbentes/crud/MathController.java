@@ -24,12 +24,21 @@ public class MathController {
 			throw new Exception();
 		}
 		
-		return 1D;
+		return convertToDouble(numberOne) + convertToDouble(numberTwo);
 	}
 
-	private boolean isNumeric(String number) {
-		// TODO Auto-generated method stub
-		return false;
+	//Metodos para tratamento
+	private Double convertToDouble(String srtNumber) {
+		if(srtNumber == null) return 0D;
+		String number = srtNumber.replaceAll(",", "."); //Converter o numerico BRL para o USA
+		if(isNumeric(number)) return Double.parseDouble(number);
+		return 0D;
+	}
+
+	private boolean isNumeric(String srtNumber) {
+		if(srtNumber == null) return false;
+		String number = srtNumber.replaceAll(",", ".");
+		return number.matches("[-+]?[0-9]*\\.?[0-9]+"); // Aplicando regex para verificar se realmente e um numero
 	}
 
 }
