@@ -69,6 +69,19 @@ public class MathController {
 		return convertToDouble(numberOne) / convertToDouble(numberTwo);
 	}
 
+	@RequestMapping(value = "/medi/{numberOne}/{numberTwo}", method=RequestMethod.GET)
+	public Double medi(
+			@PathVariable(value = "numberOne") String numberOne,
+			@PathVariable(value = "numberTwo") String numberTwo
+	) throws Exception{
+
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new UnsupportedMathOperationException("Please ste a numeric value!");
+		}
+
+		return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+	}
+
 
 	//Metodos para tratamento
 	private Double convertToDouble(String srtNumber) {
