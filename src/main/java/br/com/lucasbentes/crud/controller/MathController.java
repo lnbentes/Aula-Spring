@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import br.com.lucasbentes.crud.converter.NumberConverter;
 import br.com.lucasbentes.crud.exceptions.UnsupportedMathOperationException;
 import br.com.lucasbentes.crud.math.SimpleMath;
+import br.com.lucasbentes.crud.validation.NumericValidation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +20,7 @@ public class MathController {
 	private final AtomicLong counter = new AtomicLong();
 
 	SimpleMath math = new SimpleMath();
+	NumericValidation validation = new NumericValidation();
 	
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
 	public Double sum(
@@ -26,9 +28,7 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 			) throws Exception{
 		
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(numberOne, numberTwo);
 		
 		return math.sum(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
@@ -39,9 +39,7 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception{
 
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(numberOne, numberTwo);
 
 		return math.sub(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
@@ -52,9 +50,7 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception{
 
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(numberOne, numberTwo);
 
 		return math.multi(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
@@ -65,9 +61,7 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception{
 
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(numberOne, numberTwo);
 
 		return math.div(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
@@ -78,9 +72,7 @@ public class MathController {
 			@PathVariable(value = "numberTwo") String numberTwo
 	) throws Exception{
 
-		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(numberOne, numberTwo);
 
 		return math.mean(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
@@ -90,9 +82,7 @@ public class MathController {
 			@PathVariable(value = "numberOne") String number
 	) throws Exception{
 
-		if(!isNumeric(number)) {
-			throw new UnsupportedMathOperationException("Please ste a numeric value!");
-		}
+		validation.validationNumber(number);
 
 		return math.sqrt(convertToDouble(number));
 	}
