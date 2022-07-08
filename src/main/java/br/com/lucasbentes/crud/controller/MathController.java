@@ -1,19 +1,24 @@
-package br.com.lucasbentes.crud;
+package br.com.lucasbentes.crud.controller;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import br.com.lucasbentes.crud.converter.NumberConverter;
 import br.com.lucasbentes.crud.exceptions.UnsupportedMathOperationException;
+import br.com.lucasbentes.crud.math.SimpleMath;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import static br.com.lucasbentes.crud.converter.NumberConverter.convertToDouble;
+import static br.com.lucasbentes.crud.converter.NumberConverter.isNumeric;
+
 @RestController
 public class MathController {
 	
 	private final AtomicLong counter = new AtomicLong();
-	
-	//Implementando uma calculadora
+
+	SimpleMath math = new SimpleMath();
 	
 	@RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method=RequestMethod.GET)
 	public Double sum(
@@ -25,7 +30,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 		
-		return convertToDouble(numberOne) + convertToDouble(numberTwo);
+		return math.sum(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 
 	@RequestMapping(value = "/sub/{numberOne}/{numberTwo}", method=RequestMethod.GET)
@@ -38,7 +43,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 
-		return convertToDouble(numberOne) - convertToDouble(numberTwo);
+		return math.sub(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 
 	@RequestMapping(value = "/multi/{numberOne}/{numberTwo}", method=RequestMethod.GET)
@@ -51,7 +56,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 
-		return convertToDouble(numberOne) * convertToDouble(numberTwo);
+		return math.multi(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 
 	@RequestMapping(value = "/div/{numberOne}/{numberTwo}", method=RequestMethod.GET)
@@ -64,9 +69,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 
-		if(convertToDouble(numberTwo) == 0) throw new UnsupportedMathOperationException("Impossible division for 0!");
-
-		return convertToDouble(numberOne) / convertToDouble(numberTwo);
+		return math.div(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 
 	@RequestMapping(value = "/mean/{numberOne}/{numberTwo}", method=RequestMethod.GET)
@@ -79,7 +82,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 
-		return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+		return math.mean(convertToDouble(numberOne), convertToDouble(numberTwo));
 	}
 
 	@RequestMapping(value = "/sqrt/{number}", method=RequestMethod.GET)
@@ -91,22 +94,7 @@ public class MathController {
 			throw new UnsupportedMathOperationException("Please ste a numeric value!");
 		}
 
-		return Math.sqrt(convertToDouble(number));
-	}
-
-
-	//Metodos para tratamento
-	private Double convertToDouble(String srtNumber) {
-		if(srtNumber == null) return 0D;
-		String number = srtNumber.replaceAll(",", "."); //Converter o numerico BRL para o USA
-		if(isNumeric(number)) return Double.parseDouble(number);
-		return 0D;
-	}
-
-	private boolean isNumeric(String srtNumber) {
-		if(srtNumber == null) return false;
-		String number = srtNumber.replaceAll(",", ".");
-		return number.matches("[-+]?[0-9]*\\.?[0-9]+"); // Aplicando regex para verificar se realmente e um numero
+		return math.sqrt(convertToDouble(number));
 	}
 
 }
