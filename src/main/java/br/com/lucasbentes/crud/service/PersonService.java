@@ -2,7 +2,6 @@ package br.com.lucasbentes.crud.service;
 
 import br.com.lucasbentes.crud.data.vo.v1.PersonVO;
 import br.com.lucasbentes.crud.exceptions.ResourceNotFoundException;
-import br.com.lucasbentes.crud.model.Person;
 import br.com.lucasbentes.crud.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +39,8 @@ public class PersonService {
         var entity = repository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found this ID"));
 
-        entity.setFistName(person.getFistName());
-        entity.setLastName(person.getFistName());
+        entity.setFirstName(person.getFirstName());
+        entity.setLastName(person.getFirstName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
         return repository.save(entity);

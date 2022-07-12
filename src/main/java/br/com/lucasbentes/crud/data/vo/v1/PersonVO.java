@@ -23,11 +23,11 @@ public class PersonVO implements Serializable {
         this.id = id;
     }
 
-    public String getFistName() {
+    public String getFirstName() {
         return fistName;
     }
 
-    public void setFistName(String fistName) {
+    public void setFirstName(String fistName) {
         this.fistName = fistName;
     }
 
@@ -60,11 +60,11 @@ public class PersonVO implements Serializable {
         if (this == o) return true;
         if (!(o instanceof PersonVO)) return false;
         PersonVO person = (PersonVO) o;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFistName(), person.getFistName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFistName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
     }
 }
