@@ -2,6 +2,8 @@ package br.com.lucasbentes.crud.service;
 
 import br.com.lucasbentes.crud.data.vo.v1.PersonVO;
 import br.com.lucasbentes.crud.exceptions.ResourceNotFoundException;
+import br.com.lucasbentes.crud.mapper.DozerMapper;
+import br.com.lucasbentes.crud.model.Person;
 import br.com.lucasbentes.crud.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,20 +21,38 @@ public class PersonService {
 
     public List<PersonVO> findAll(){
         logger.info("Finding all people!");
-        return repository.findAll();
+        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class); // Retorna a lista convertida
     }
 
+    /*
+     * 1- Localiza o person armazena na variable;
+     * 2- retorna o person convertido para personVO;
+     * */
     public PersonVO findById(Long id){
         logger.info("Finding one person!");
-        return repository.findById(id)
+        var person = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found this ID"));
+        return DozerMapper.parseObject(person, PersonVO.class);
     }
 
+    /*
+    * 1- Pega o personVo e converte para person;
+    * 2- Salva no banco, o banco retorna um person que vai ser convertido para personVO;
+    * 3- Devolve o personVO;
+    * */
     public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
-        return repository.save(person);
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var entityVO = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return entityVO;
     }
 
+    /*
+     * 1- Localiza o person armazena na variable;
+     * 2- Set as informações do personVO para o person;
+     * 3- Salva o person no banco e converta ele para personVO;
+     * 4- Retorna o personVO;
+     * */
     public PersonVO update(PersonVO person) {
         logger.info("Updating one person!");
 
@@ -43,7 +63,8 @@ public class PersonService {
         entity.setLastName(person.getFirstName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        return repository.save(entity);
+        var entityVO = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return entityVO;
     }
 
     public void delete(Long id) {
