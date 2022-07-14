@@ -1,6 +1,7 @@
 package br.com.lucasbentes.crud.service;
 
 import br.com.lucasbentes.crud.data.vo.v1.PersonVO;
+import br.com.lucasbentes.crud.data.vo.v2.PersonVO2;
 import br.com.lucasbentes.crud.exceptions.ResourceNotFoundException;
 import br.com.lucasbentes.crud.mapper.DozerMapper;
 import br.com.lucasbentes.crud.model.Person;
@@ -44,6 +45,13 @@ public class PersonService {
         logger.info("Creating one person!");
         var entity = DozerMapper.parseObject(person, Person.class);
         var entityVO = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
+        return entityVO;
+    }
+
+    public PersonVO2 createV2(PersonVO2 person) {
+        logger.info("Creating one person with V2!");
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var entityVO = DozerMapper.parseObject(repository.save(entity), PersonVO2.class);
         return entityVO;
     }
 

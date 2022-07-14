@@ -1,6 +1,7 @@
 package br.com.lucasbentes.crud.controller;
 
 import br.com.lucasbentes.crud.data.vo.v1.PersonVO;
+import br.com.lucasbentes.crud.data.vo.v2.PersonVO2;
 import br.com.lucasbentes.crud.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,6 +32,13 @@ public class PersonController {
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	public PersonVO create(@RequestBody PersonVO person){
 		return service.create(person);
+	}
+
+	@PostMapping(value = "/v2",
+			produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public PersonVO2 createV2(@RequestBody PersonVO2 person){
+		return service.createV2(person);
 	}
 
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE,
