@@ -1,9 +1,10 @@
-package br.com.lucasbentes.crud.data.vo.v1;
+package br.com.lucasbentes.crud.data.vo.v2;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class PersonVO implements Serializable {
+public class PersonVO2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -12,8 +13,9 @@ public class PersonVO implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    private Date birthday;
 
-    public PersonVO(){}
+    public PersonVO2(){}
 
     public Long getId() {
         return id;
@@ -55,16 +57,24 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersonVO)) return false;
-        PersonVO person = (PersonVO) o;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        if (!(o instanceof PersonVO2)) return false;
+        PersonVO2 personVO2 = (PersonVO2) o;
+        return Objects.equals(getId(), personVO2.getId()) && Objects.equals(getFirstName(), personVO2.getFirstName()) && Objects.equals(getLastName(), personVO2.getLastName()) && Objects.equals(getAddress(), personVO2.getAddress()) && Objects.equals(getGender(), personVO2.getGender()) && Objects.equals(getBirthday(), personVO2.getBirthday());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender(), getBirthday());
     }
 }
