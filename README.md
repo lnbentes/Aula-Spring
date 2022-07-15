@@ -4,4 +4,4 @@
 <p>As aulas está dividida por branch, no qual cada branch representa uma seção da aula.</p>
 
 <p>Tecnologias usadas:
-SpringBoot; MySQL; Dozer</p>
+SpringBoot; MySQL; Dozer; FlyWay</p>
