@@ -1,16 +1,28 @@
 package br.com.lucasbentes.crud.data.vo.v1;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+// O JsonPropertyOrder pode ser usado para mudar a ordem que os atributos sao apresentados em json
+@JsonPropertyOrder({"id", "address", "first_name", "lastName", "gender"})
 public class PersonVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    // O JsonProperty pode ser usado para mudar a nomenclatura do atributo no Json
+    @JsonProperty("first_name")
     private String firstName;
     private String lastName;
     private String address;
+
+    // O JsonIgnore ser para ocultar algo no Json
+    @JsonIgnore
     private String gender;
 
     public PersonVO(){}
